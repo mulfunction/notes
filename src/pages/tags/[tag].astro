@@ -64,7 +64,7 @@ const searchItems = posts.map((p) => ({
   <div class="py-8 border-b border-[var(--border-card)] mb-8">
     <a 
       href={`${baseUrl}/`} 
-      class="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-sky-400 mb-4 group transition-colors"
+      class="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--accent)] mb-4 group transition-colors"
     >
       <svg class="group-hover:-translate-x-1 transition-transform" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="19" y1="12" x2="5" y2="12"></line>
@@ -75,7 +75,7 @@ const searchItems = posts.map((p) => ({
 
     <h1 class="text-3xl font-extrabold tracking-tight text-[var(--text-primary)] mb-2 flex items-center gap-3">
       <span>Tag:</span>
-      <span class="text-sky-400">#{tag}</span>
+      <span class="text-[var(--accent)]">#{tag}</span>
     </h1>
     <p class="text-[var(--text-secondary)] text-sm sm:text-base">
       Found {posts.length} {posts.length === 1 ? 'entry' : 'entries'} matching this tag.

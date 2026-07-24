@@ -2,61 +2,74 @@
 
 @layer base {
   :root {
-    --bg-main: #090d16;
-    --bg-card: #111827;
-    --border-card: rgba(255, 255, 255, 0.08);
-    --text-primary: #f3f4f6;
-    --text-secondary: #9ca3af;
-    --accent: #38bdf8;
-    --accent-hover: #0284c7;
+    /* Gruvbox Material Dark Palette */
+    --bg-main: #282828;
+    --bg-card: #32302f;
+    --bg-card-hover: #3c3836;
+    --border-card: #504945;
+    --text-primary: #ddc7a1;
+    --text-secondary: #a89984;
+    --accent: #e78a4e;         /* Gruvbox Orange */
+    --accent-hover: #d8a657;   /* Gruvbox Yellow */
+    --accent-green: #a9b665;   /* Gruvbox Green */
+    --accent-aqua: #89b482;    /* Gruvbox Aqua */
+    --accent-purple: #d3869b;  /* Gruvbox Purple */
+    --accent-red: #ea696c;     /* Gruvbox Red */
   }
 
   .light {
-    --bg-main: #f8fafc;
-    --bg-card: #ffffff;
-    --border-card: rgba(0, 0, 0, 0.08);
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --accent: #0284c7;
-    --accent-hover: #0369a1;
+    /* Gruvbox Material Light Palette */
+    --bg-main: #fbf1c7;
+    --bg-card: #f2e5bc;
+    --bg-card-hover: #ebdbb2;
+    --border-card: #d5c4a1;
+    --text-primary: #282828;
+    --text-secondary: #665c54;
+    --accent: #af3a03;         /* Gruvbox Dark Rust/Orange */
+    --accent-hover: #b57614;   /* Gruvbox Dark Gold */
+    --accent-green: #427b58;   /* Gruvbox Dark Green */
+    --accent-aqua: #076678;    /* Gruvbox Dark Teal */
+    --accent-purple: #8f3f71;  /* Gruvbox Dark Purple */
+    --accent-red: #9d0006;     /* Gruvbox Dark Red */
   }
 
   body {
     background-color: var(--bg-main);
     color: var(--text-primary);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Geist', 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Fira Code', 'Cascadia Code', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace, system-ui, -apple-system, sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
-/* Custom scrollbars */
+/* Custom Gruvbox scrollbars */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--bg-main);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(156, 163, 175, 0.3);
+  background: var(--border-card);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(156, 163, 175, 0.5);
+  background: var(--text-secondary);
 }
 
 /* Code block styling */
 pre {
   padding: 1.25rem;
   border-radius: 0.75rem;
+  background-color: var(--bg-card) !important;
   border: 1px solid var(--border-card);
   overflow-x: auto;
 }
 
-/* Markdown prose styling */
+/* Markdown prose styling for Gruvbox Material */
 .prose h1 {
   font-size: 2.25rem;
   line-height: 2.5rem;
@@ -72,7 +85,7 @@ pre {
   line-height: 2rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: var(--text-primary);
+  color: var(--accent);
   margin-top: 2.25rem;
   margin-bottom: 0.875rem;
   padding-bottom: 0.5rem;
@@ -83,7 +96,7 @@ pre {
   font-size: 1.25rem;
   line-height: 1.75rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--accent-hover);
   margin-top: 1.75rem;
   margin-bottom: 0.75rem;
 }
@@ -117,12 +130,14 @@ pre {
 }
 
 .prose li::marker {
-  color: var(--accent);
+  color: var(--accent-green);
 }
 
 .prose blockquote {
   border-left: 4px solid var(--accent);
-  padding-left: 1rem;
+  background-color: var(--bg-card);
+  padding: 0.75rem 1rem;
+  border-radius: 0 0.5rem 0.5rem 0;
   font-style: italic;
   color: var(--text-secondary);
   margin-top: 1.5rem;
@@ -130,9 +145,10 @@ pre {
 }
 
 .prose code:not(pre code) {
-  background-color: rgba(255, 255, 255, 0.08);
-  color: var(--accent);
+  background-color: var(--bg-card);
+  color: var(--accent-hover);
   padding: 0.2rem 0.4rem;
+  border: 1px solid var(--border-card);
   border-radius: 0.375rem;
   font-size: 0.875em;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;

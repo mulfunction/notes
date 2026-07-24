@@ -30,7 +30,6 @@ const reports = rawReports.filter((p) => !p.data.draft).map((p) => ({
   featured: false,
 }));
 
-// Combine and sort by date descending
 const allPosts = [...notes, ...reports].sort(
   (a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf()
 );
@@ -39,7 +38,6 @@ const baseUrl = import.meta.env.BASE_URL.endsWith('/')
   ? import.meta.env.BASE_URL.slice(0, -1) 
   : import.meta.env.BASE_URL;
 
-// Search index payload for modal
 const searchItems = allPosts.map(p => ({
   title: p.title,
   description: p.description,
@@ -49,7 +47,6 @@ const searchItems = allPosts.map(p => ({
   date: new Date(p.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 }));
 
-// Extract unique tags
 const allTags = Array.from(new Set(allPosts.flatMap(p => p.tags)));
 ---
 
@@ -57,27 +54,27 @@ const allTags = Array.from(new Set(allPosts.flatMap(p => p.tags)));
   <!-- Hero Section -->
   <section class="py-8 sm:py-12 border-b border-[var(--border-card)] mb-10">
     <div class="max-w-3xl">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20 mb-4">
-        <span>Updated Weekly</span>
-        <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/30 mb-4">
+        <span>Obsidian Synced</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-green)] animate-pulse"></span>
       </div>
       <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--text-primary)] mb-4">
         Notes, Logs & Reports
       </h1>
       <p class="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed">
-        A personal, fast digital notebook for weekly project progress reports, technical logs, software patterns, and architectural guides.
+        A personal Gruvbox-themed digital notebook for weekly project progress reports, technical logs, software patterns, and architectural guides.
       </p>
 
-      <!-- Quick Stats & Action -->
+      <!-- Quick Stats -->
       <div class="mt-8 flex flex-wrap items-center gap-6 text-sm text-[var(--text-secondary)]">
         <div>
-          <span class="font-bold text-[var(--text-primary)] text-lg">{allPosts.length}</span> Total Posts
+          <span class="font-bold text-[var(--accent)] text-lg">{allPosts.length}</span> Total Posts
         </div>
         <div>
-          <span class="font-bold text-[var(--text-primary)] text-lg">{reports.length}</span> Weekly Reports
+          <span class="font-bold text-[var(--accent-green)] text-lg">{reports.length}</span> Weekly Reports
         </div>
         <div>
-          <span class="font-bold text-[var(--text-primary)] text-lg">{notes.length}</span> Tech Notes
+          <span class="font-bold text-[var(--accent-purple)] text-lg">{notes.length}</span> Tech Notes
         </div>
       </div>
     </div>
@@ -86,7 +83,7 @@ const allTags = Array.from(new Set(allPosts.flatMap(p => p.tags)));
   <!-- Tag Filter Cloud -->
   <section class="mb-10">
     <div class="flex items-center justify-between mb-4">
-      <h2 class="text-sm font-semibold tracking-wider uppercase text-[var(--text-secondary)]">
+      <h2 class="text-xs font-semibold tracking-wider uppercase text-[var(--text-secondary)]">
         Filter by Tag
       </h2>
     </div>
@@ -94,7 +91,7 @@ const allTags = Array.from(new Set(allPosts.flatMap(p => p.tags)));
       {allTags.map((tag) => (
         <a 
           href={`${baseUrl}/tags/${tag}`}
-          class="px-3 py-1 rounded-lg text-xs font-medium bg-[var(--bg-card)] border border-[var(--border-card)] text-[var(--text-secondary)] hover:text-sky-400 hover:border-sky-500/30 transition-all duration-200"
+          class="px-3 py-1 rounded-lg text-xs font-medium bg-[var(--bg-card)] border border-[var(--border-card)] text-[var(--text-secondary)] hover:text-[var(--accent)] hover:border-[var(--accent)]/50 transition-all duration-200"
         >
           #{tag}
         </a>

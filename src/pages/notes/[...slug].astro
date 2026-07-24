@@ -32,7 +32,7 @@ const readingTime = getReadingTime(entry.body || entry.data.description);
     <!-- Back Button -->
     <a 
       href={`${baseUrl}/notes`} 
-      class="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-sky-400 mb-8 group transition-colors"
+      class="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--accent)] mb-8 group transition-colors"
     >
       <svg class="group-hover:-translate-x-1 transition-transform" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="19" y1="12" x2="5" y2="12"></line>
@@ -44,7 +44,7 @@ const readingTime = getReadingTime(entry.body || entry.data.description);
     <!-- Article Header -->
     <header class="mb-10 pb-8 border-b border-[var(--border-card)]">
       <div class="flex items-center gap-3 text-xs mb-4">
-        <span class="px-2.5 py-1 rounded-full font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20">
+        <span class="px-2.5 py-1 rounded-full font-semibold bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/30">
           {entry.data.category}
         </span>
         <span class="text-[var(--text-secondary)]">•</span>
@@ -65,7 +65,7 @@ const readingTime = getReadingTime(entry.body || entry.data.description);
         {entry.data.tags.map((tag) => (
           <a 
             href={`${baseUrl}/tags/${tag}`}
-            class="text-xs px-2.5 py-1 rounded-md text-[var(--text-secondary)] hover:text-sky-400 bg-white/5 border border-[var(--border-card)] hover:border-sky-500/30 transition-colors"
+            class="text-xs px-2.5 py-1 rounded-md text-[var(--text-secondary)] hover:text-[var(--accent)] bg-[var(--bg-card)] border border-[var(--border-card)] hover:border-[var(--accent)]/40 transition-colors"
           >
             #{tag}
           </a>
@@ -74,7 +74,7 @@ const readingTime = getReadingTime(entry.body || entry.data.description);
     </header>
 
     <!-- Markdown Content Render -->
-    <div class="prose prose-invert max-w-none text-[var(--text-primary)] leading-relaxed space-y-6">
+    <div class="prose max-w-none text-[var(--text-primary)] leading-relaxed space-y-6">
       <Content />
     </div>
   </article>

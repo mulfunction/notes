@@ -29,11 +29,11 @@ const readingTime = getReadingTime(body || description);
 const postUrl = `${baseUrl}/${collectionType}/${slug}`;
 ---
 
-<article class={`group relative rounded-2xl p-6 sm:p-8 bg-[var(--bg-card)] border border-[var(--border-card)] hover:border-sky-500/40 transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 hover:shadow-xl hover:shadow-sky-500/5 ${featured ? 'md:col-span-2' : ''}`}>
+<article class={`group relative rounded-2xl p-6 sm:p-8 bg-[var(--bg-card)] border border-[var(--border-card)] hover:border-[var(--accent)] transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 hover:shadow-2xl ${featured ? 'md:col-span-2' : ''}`}>
   <div>
     <!-- Category & Date Header -->
     <div class="flex items-center justify-between gap-2 mb-4 text-xs">
-      <span class="px-2.5 py-1 rounded-full font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20">
+      <span class="px-2.5 py-1 rounded-full font-semibold bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/30">
         {category}
       </span>
       <div class="flex items-center space-x-2 text-[var(--text-secondary)]">
@@ -44,7 +44,7 @@ const postUrl = `${baseUrl}/${collectionType}/${slug}`;
     </div>
 
     <!-- Title -->
-    <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text-primary)] group-hover:text-sky-400 transition-colors mb-3">
+    <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text-primary)] group-hover:text-[var(--accent-hover)] transition-colors mb-3">
       <a href={postUrl} class="focus:outline-none">
         <span class="absolute inset-0" aria-hidden="true"></span>
         {title}
@@ -58,11 +58,11 @@ const postUrl = `${baseUrl}/${collectionType}/${slug}`;
   </div>
 
   <!-- Tags Footer -->
-  <div class="flex flex-wrap gap-1.5 pt-4 border-t border-[var(--border-card)]/50 z-10">
+  <div class="flex flex-wrap gap-1.5 pt-4 border-t border-[var(--border-card)] z-10">
     {tags.map((tag) => (
       <a 
         href={`${baseUrl}/tags/${tag}`}
-        class="text-xs px-2 py-0.5 rounded-md text-[var(--text-secondary)] hover:text-sky-400 bg-white/5 hover:bg-sky-500/10 transition-colors"
+        class="text-xs px-2 py-0.5 rounded-md text-[var(--text-secondary)] hover:text-[var(--accent)] bg-[var(--bg-main)] hover:bg-[var(--border-card)] transition-colors"
       >
         #{tag}
       </a>

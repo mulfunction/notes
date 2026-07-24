@@ -21,7 +21,7 @@ const { posts } = Astro.props;
     
     <!-- Search Input Header -->
     <div class="p-4 border-b border-[var(--border-card)] flex items-center gap-3">
-      <svg class="text-sky-400" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg class="text-[var(--accent)]" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="11" cy="11" r="8"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
@@ -113,10 +113,10 @@ const { posts } = Astro.props;
       searchResults.innerHTML = filtered.map(post => `
         <a href="${post.url}" class="block p-3 rounded-xl hover:bg-white/5 transition-colors group">
           <div class="flex items-center justify-between text-xs text-[var(--text-secondary)] mb-1">
-            <span class="text-sky-400 font-medium">${post.category}</span>
+            <span class="text-[var(--accent)] font-medium">${post.category}</span>
             <span>${post.date}</span>
           </div>
-          <div class="font-semibold text-[var(--text-primary)] group-hover:text-sky-400 transition-colors">${post.title}</div>
+          <div class="font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors">${post.title}</div>
           <div class="text-xs text-[var(--text-secondary)] line-clamp-1 mt-1">${post.description}</div>
         </a>
       `).join('');
