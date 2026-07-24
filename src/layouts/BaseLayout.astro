@@ -39,7 +39,7 @@ const { title, description = 'Personal Markdown Notes & Weekly Reports Hub', sea
     <script is:inline>
       (function() {
         const storedTheme = localStorage.getItem('theme');
-        if (storedTheme === 'light' || (!storedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        if (storedTheme === 'light') {
           document.documentElement.classList.add('light');
         } else {
           document.documentElement.classList.remove('light');
