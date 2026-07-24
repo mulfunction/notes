@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { getReadingTime } from '../../utils/readingTime';
+
+export async function getStaticPaths() {
+  const reports = await getCollection('reports');
+  return reports.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const baseUrl = import.meta.env.BASE_URL.endsWith('/') 
+  ? import.meta.env.BASE_URL.slice(0, -1) 
+  : import.meta.env.BASE_URL;
+
+const formattedDate = new Date(entry.data.date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+
+const readingTime = getReadingTime(entry.body || entry.data.description);
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.description}>
+  <article class="max-w-3xl mx-auto pt-4">
+    <!-- Back Button -->
+    <a 
+      href={`${baseUrl}/reports`} 
+      class="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-sky-400 mb-8 group transition-colors"
+    >
+      <svg class="group-hover:-translate-x-1 transition-transform" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      <span>Back to Weekly Reports</span>
+    </a>
+
+    <!-- Article Header -->
+    <header class="mb-10 pb-8 border-b border-[var(--border-card)]">
+      <div class="flex items-center gap-3 text-xs mb-4">
+        <span class="px-2.5 py-1 rounded-full font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20">
+          {entry.data.category}
+        </span>
+        <span class="text-[var(--text-secondary)]">•</span>
+        <time class="text-[var(--text-secondary)]" datetime={entry.data.date.toISOString()}>{formattedDate}</time>
+        <span class="text-[var(--text-secondary)]">•</span>
+        <span class="text-[var(--text-secondary)]">{readingTime}</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--text-primary)] mb-4">
+        {entry.data.title}
+      </h1>
+      
+      <p class="text-lg text-[var(--text-secondary)] leading-relaxed">
+        {entry.data.description}
+      </p>
+
+      <div class="flex flex-wrap gap-2 mt-6">
+        {entry.data.tags.map((tag) => (
+          <a 
+            href={`${baseUrl}/tags/${tag}`}
+            class="text-xs px-2.5 py-1 rounded-md text-[var(--text-secondary)] hover:text-sky-400 bg-white/5 border border-[var(--border-card)] hover:border-sky-500/30 transition-colors"
+          >
+            #{tag}
+          </a>
+        ))}
+      </div>
+    </header>
+
+    <!-- Markdown Content Render -->
+    <div class="prose prose-invert max-w-none text-[var(--text-primary)] leading-relaxed space-y-6">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

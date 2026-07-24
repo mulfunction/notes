@@ -1,0 +1,125 @@
+---
+interface SearchItem {
+  title: string;
+  description: string;
+  url: string;
+  category: string;
+  tags: string[];
+  date: string;
+}
+
+interface Props {
+  posts: SearchItem[];
+}
+
+const { posts } = Astro.props;
+---
+
+<!-- Search Modal Backdrop -->
+<div id="search-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity duration-200 opacity-0">
+  <div class="w-full max-w-2xl rounded-2xl bg-[var(--bg-card)] border border-[var(--border-card)] shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
+    
+    <!-- Search Input Header -->
+    <div class="p-4 border-b border-[var(--border-card)] flex items-center gap-3">
+      <svg class="text-sky-400" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input 
+        id="search-input" 
+        type="text" 
+        placeholder="Type to search notes & reports..." 
+        class="w-full bg-transparent text-base text-[var(--text-primary)] placeholder-[var(--text-secondary)] focus:outline-none"
+        autocomplete="off"
+      />
+      <button id="close-search" type="button" class="text-xs px-2 py-1 rounded bg-white/10 text-[var(--text-secondary)] hover:text-white">
+        ESC
+      </button>
+    </div>
+
+    <!-- Search Results Container -->
+    <div id="search-results" class="p-4 overflow-y-auto divide-y divide-[var(--border-card)] space-y-2">
+      <div id="search-empty-state" class="text-center py-8 text-sm text-[var(--text-secondary)]">
+        Start typing to find notes, weekly reports, or tags.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ postsData: posts }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchModal = document.getElementById('search-modal');
+    const openBtn = document.getElementById('open-search');
+    const closeBtn = document.getElementById('close-search');
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+
+    function openModal() {
+      if (!searchModal) return;
+      searchModal.classList.remove('hidden');
+      setTimeout(() => {
+        searchModal.classList.remove('opacity-0');
+        searchModal.classList.add('flex', 'opacity-100');
+        searchInput?.focus();
+      }, 10);
+    }
+
+    function closeModal() {
+      if (!searchModal) return;
+      searchModal.classList.remove('opacity-100');
+      searchModal.classList.add('opacity-0');
+      setTimeout(() => {
+        searchModal.classList.add('hidden');
+        searchModal.classList.remove('flex');
+      }, 200);
+    }
+
+    openBtn?.addEventListener('click', openModal);
+    closeBtn?.addEventListener('click', closeModal);
+
+    searchModal?.addEventListener('click', (e) => {
+      if (e.target === searchModal) closeModal();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        openModal();
+      }
+      if (e.key === 'Escape') closeModal();
+    });
+
+    searchInput?.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      if (!searchResults) return;
+
+      if (!query) {
+        searchResults.innerHTML = `<div class="text-center py-8 text-sm text-[var(--text-secondary)]">Start typing to find notes, weekly reports, or tags.</div>`;
+        return;
+      }
+
+      const filtered = postsData.filter(post => 
+        post.title.toLowerCase().includes(query) ||
+        post.description.toLowerCase().includes(query) ||
+        post.category.toLowerCase().includes(query) ||
+        post.tags.some(tag => tag.toLowerCase().includes(query))
+      );
+
+      if (filtered.length === 0) {
+        searchResults.innerHTML = `<div class="text-center py-8 text-sm text-[var(--text-secondary)]">No results found for "${query}"</div>`;
+        return;
+      }
+
+      searchResults.innerHTML = filtered.map(post => `
+        <a href="${post.url}" class="block p-3 rounded-xl hover:bg-white/5 transition-colors group">
+          <div class="flex items-center justify-between text-xs text-[var(--text-secondary)] mb-1">
+            <span class="text-sky-400 font-medium">${post.category}</span>
+            <span>${post.date}</span>
+          </div>
+          <div class="font-semibold text-[var(--text-primary)] group-hover:text-sky-400 transition-colors">${post.title}</div>
+          <div class="text-xs text-[var(--text-secondary)] line-clamp-1 mt-1">${post.description}</div>
+        </a>
+      `).join('');
+    });
+  });
+</script>

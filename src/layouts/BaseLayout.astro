@@ -1,0 +1,89 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SearchModal from '../components/SearchModal.astro';
+import '../styles/global.css';
+
+interface SearchItem {
+  title: string;
+  description: string;
+  url: string;
+  category: string;
+  tags: string[];
+  date: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  searchPosts?: SearchItem[];
+}
+
+const { title, description = 'Personal Markdown Notes & Weekly Reports Hub', searchPosts = [] } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/favicon.svg`} />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title} | Content Hub</title>
+    <meta name="title" content={`${title} | Content Hub`} />
+    <meta name="description" content={description} />
+
+    <!-- Anti-flash inline script for dark/light theme -->
+    <script is:inline>
+      (function() {
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'light' || (!storedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+          document.documentElement.classList.add('light');
+        } else {
+          document.documentElement.classList.remove('light');
+        }
+      })();
+    </script>
+  </head>
+  <body class="min-h-[100dvh] flex flex-col antialiased">
+    <Header />
+
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 pt-8 pb-16">
+      <slot />
+    </main>
+
+    <Footer />
+    <SearchModal posts={searchPosts} />
+
+    <!-- Theme switcher script -->
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', () => {
+        const toggleBtn = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('theme-icon-sun');
+        const moonIcon = document.getElementById('theme-icon-moon');
+
+        function updateIcons() {
+          const isLight = document.documentElement.classList.contains('light');
+          if (isLight) {
+            sunIcon?.classList.add('hidden');
+            moonIcon?.classList.remove('hidden');
+          } else {
+            moonIcon?.classList.add('hidden');
+            sunIcon?.classList.remove('hidden');
+          }
+        }
+
+        updateIcons();
+
+        toggleBtn?.addEventListener('click', () => {
+          document.documentElement.classList.toggle('light');
+          const isLight = document.documentElement.classList.contains('light');
+          localStorage.setItem('theme', isLight ? 'light' : 'dark');
+          updateIcons();
+        });
+      });
+    </script>
+  </body>
+</html>

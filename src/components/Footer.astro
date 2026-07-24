@@ -1,0 +1,28 @@
+---
+const currentYear = new Date().getFullYear();
+const baseUrl = import.meta.env.BASE_URL.endsWith('/') 
+  ? import.meta.env.BASE_URL.slice(0, -1) 
+  : import.meta.env.BASE_URL;
+---
+
+<footer class="mt-20 border-t border-[var(--border-card)] py-10 transition-colors duration-300">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[var(--text-secondary)]">
+    <div>
+      © {currentYear} Personal Content Hub. All rights reserved.
+    </div>
+
+    <div class="flex items-center space-x-6">
+      <a href={`${baseUrl}/rss.xml`} class="hover:text-sky-400 transition-colors flex items-center gap-1.5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 11a9 9 0 0 1 9 9"></path>
+          <path d="M4 4a16 16 0 0 1 16 16"></path>
+          <circle cx="5" cy="19" r="1"></circle>
+        </svg>
+        <span>RSS Feed</span>
+      </a>
+      <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-sky-400 transition-colors">
+        GitHub
+      </a>
+    </div>
+  </div>
+</footer>
