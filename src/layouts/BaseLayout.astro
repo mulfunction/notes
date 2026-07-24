@@ -16,10 +16,21 @@ interface SearchItem {
 interface Props {
   title: string;
   description?: string;
+  image?: string;
   searchPosts?: SearchItem[];
 }
 
-const { title, description = 'Personal Markdown Notes & Weekly Reports Hub', searchPosts = [] } = Astro.props;
+const { 
+  title, 
+  description = 'Muldan\'s Personal Notes, Weekly Reports & Software Engineering Hub', 
+  image, 
+  searchPosts = [] 
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const defaultImage = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/logo.jpeg`;
+const ogImageUrl = new URL(image || defaultImage, Astro.site).href;
+const fullTitle = `${title} | Muldan Notes & Reports`;
 ---
 
 <!DOCTYPE html>
@@ -28,12 +39,29 @@ const { title, description = 'Personal Markdown Notes & Weekly Reports Hub', sea
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/jpeg" href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/logo.jpeg`} />
+    <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
     
     <!-- Primary Meta Tags -->
-    <title>{title} | Content Hub</title>
-    <meta name="title" content={`${title} | Content Hub`} />
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
     <meta name="description" content={description} />
+
+    <!-- Open Graph / WhatsApp / Facebook Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Muldan Notes & Reports" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:type" content="image/jpeg" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <!-- Anti-flash inline script for dark/light theme -->
     <script is:inline>
