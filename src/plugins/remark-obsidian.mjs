@@ -1,7 +1,26 @@
 import { visit } from 'unist-util-visit';
+import fs from 'fs';
+import path from 'path';
+
+function loadEnv() {
+  const envPath = path.resolve(process.cwd(), '.env');
+  const env = {};
+  if (fs.existsSync(envPath)) {
+    const envContent = fs.readFileSync(envPath, 'utf8');
+    envContent.split('\n').forEach(line => {
+      const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
+      if (match) {
+        env[match[1]] = match[2] || '';
+      }
+    });
+  }
+  return env;
+}
 
 export function remarkObsidian() {
+  const env = loadEnv();
   const baseUrl = (process.env.BASE_URL || '/notes').replace(/\/$/, '');
+  const cloudBucketUrl = (env.CLOUD_BUCKET_URL || process.env.CLOUD_BUCKET_URL || '').replace(/\/$/, '');
 
   return (tree) => {
     visit(tree, 'paragraph', (node) => {
@@ -27,7 +46,7 @@ export function remarkObsidian() {
             if (match[1]) {
               const fileName = match[1].trim();
               const ext = fileName.split('.').pop()?.toLowerCase() || '';
-              const src = `${baseUrl}/images/${fileName}`;
+              const src = cloudBucketUrl ? `${cloudBucketUrl}/${fileName}` : `${baseUrl}/images/${fileName}`;
 
               if (['mp4', 'webm', 'ogg', 'mov'].includes(ext)) {
                 newChildren.push({

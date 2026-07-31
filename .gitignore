@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Ignore media files to prevent GitHub repository bloat (Commented out temporarily until Cloud Storage is set up)
+# public/images/
