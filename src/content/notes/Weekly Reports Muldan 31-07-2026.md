@@ -1,4 +1,5 @@
 ---
+title: Weekly Reports Muldan 31-07-2026
 created: 2026-07-31
 tags:
   - note
