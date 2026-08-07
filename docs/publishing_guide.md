@@ -21,9 +21,9 @@ Every time you commit and push to your `main` branch on GitHub, Vercel will auto
 
 To publish a new weekly report:
 
-1. Create a new `.md` file in `src/content/reports/`:
+1. Create a new `.md` file in `src/content/notes/`:
    ```bash
-   src/content/reports/2026-w31-weekly-report.md
+   src/content/notes/2026-w31-weekly-report.md
    ```
 2. Add the required YAML frontmatter at the top of the file:
    ```yaml
