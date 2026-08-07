@@ -5,8 +5,7 @@ import { remarkObsidian } from './src/plugins/remark-obsidian.mjs';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://mulfunction.github.io',
-  base: '/notes',
+  site: 'https://notes.muldanhamid.com',
   markdown: {
     remarkPlugins: [remarkObsidian],
   },

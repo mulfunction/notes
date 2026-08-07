@@ -27,7 +27,7 @@ export async function GET(context: APIContext) {
   return rss({
     title: 'Personal Notes & Weekly Reports Feed',
     description: 'Latest developer logs, weekly progress updates, and technical guides.',
-    site: context.site || 'https://mulfunction.github.io/notes',
+    site: context.site || 'https://notes.muldanhamid.com',
     items,
   });
 }

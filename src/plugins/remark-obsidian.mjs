@@ -19,7 +19,7 @@ function loadEnv() {
 
 export function remarkObsidian() {
   const env = loadEnv();
-  const baseUrl = (process.env.BASE_URL || '/notes').replace(/\/$/, '');
+  const baseUrl = (process.env.BASE_URL || '').replace(/\/$/, '');
   const cloudBucketUrl = (env.CLOUD_BUCKET_URL || process.env.CLOUD_BUCKET_URL || '').replace(/\/$/, '');
 
   return (tree) => {
