@@ -1,19 +1,19 @@
-# Standard Operating Procedure (SOP): Publishing Markdown Notes & Reports to GitHub Pages
+# Standard Operating Procedure (SOP): Publishing Markdown Notes & Reports to Vercel
 
 **Project:** Custom Astro Content Hub  
-**Repository Path:** `/home/muldan/Projects/web_apps/notes-hub`  
-**GitHub Pages Target:** `https://<username>.github.io/notes/`  
+**Live Target Domain:** `https://notes.muldanhamid.com`  
 
 ---
 
 ## 1. Overview & Publishing Workflow
 
-This site uses **Astro Content Collections** to compile Markdown (`.md`) and MDX (`.mdx`) files into static HTML pages.
+This site uses **Astro Content Collections** to compile Markdown (`.md`) and MDX (`.mdx`) files into static HTML pages, synced with Obsidian vault media.
 
-Every time you commit and push to your `main` (or `master`) branch on GitHub, GitHub Actions will automatically:
-1. Run `npm run build`
-2. Generate static HTML files in `./dist/`
-3. Publish your site to GitHub Pages automatically.
+Every time you commit and push to your `main` branch on GitHub, Vercel will automatically:
+1. Trigger a production deployment build.
+2. Run `npm run sync-obsidian` to copy Obsidian media files into `public/images/`.
+3. Run `astro build` to generate static HTML files in `./dist/`.
+4. Deploy the updated site live to **`https://notes.muldanhamid.com`**.
 
 ---
 
@@ -69,10 +69,9 @@ To publish a tech note, snippet, or architecture guide:
 To run the site locally before pushing:
 
 ```bash
-cd /home/muldan/Projects/web_apps/notes-hub
 npm run dev
 ```
-Open `http://localhost:4321/notes/` in your browser.
+Open `http://localhost:4321/` in your browser.
 
 To verify the production build locally:
 ```bash
@@ -82,20 +81,12 @@ npm run preview
 
 ---
 
-## 5. One-Time GitHub Repository Setup
+## 5. Vercel & GitHub Integration
 
-To connect this repository to your GitHub Pages:
+This repository is connected directly to Vercel:
 
-1. Create a new repository on GitHub (e.g. named `notes`).
-2. Push your local project code to GitHub:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit of Astro notes hub"
-   git branch -M main
-   git remote add origin git@github.com:<your-username>/notes.git
-   git push -u origin main
-   ```
-3. On GitHub, navigate to **Settings > Pages**.
-4. Under **Build and deployment > Source**, select **GitHub Actions**.
-5. Your site will automatically build and publish to `https://<username>.github.io/notes/`!
+- **Repository:** `mulfunction/notes`
+- **Branch:** `main`
+- **Domain:** `notes.muldanhamid.com`
+
+Any `git push origin main` automatically deploys the latest version to `https://notes.muldanhamid.com` without manual build commands!
