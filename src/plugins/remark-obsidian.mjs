@@ -17,6 +17,10 @@ function loadEnv() {
   return env;
 }
 
+// Encode each path segment: a literal '+' in a URL path is decoded as a space
+// by the host, so an unencoded filename like "a +50 b.png" 404s in production.
+const encodePath = (p) => p.split('/').map(encodeURIComponent).join('/');
+
 export function remarkObsidian() {
   const env = loadEnv();
   const baseUrl = (process.env.BASE_URL || '').replace(/\/$/, '');
@@ -50,7 +54,7 @@ export function remarkObsidian() {
         if (match[1]) {
           const fileName = match[1].trim();
           const ext = fileName.split('.').pop()?.toLowerCase() || '';
-          const src = cloudBucketUrl ? `${cloudBucketUrl}/${fileName}` : `${baseUrl}/images/${fileName}`;
+          const src = cloudBucketUrl ? `${cloudBucketUrl}/${encodePath(fileName)}` : `${baseUrl}/images/${encodePath(fileName)}`;
 
           if (['mp4', 'webm', 'ogg', 'mov'].includes(ext)) {
             newChildren.push({
