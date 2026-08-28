@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run sync-obsidian && astro build",
+    "build": "npm run sync-obsidian && node -e \"require('fs').rmSync('node_modules/.astro',{recursive:true,force:true})\" && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "sync-obsidian": "node scripts/sync-obsidian.js"
