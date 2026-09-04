@@ -43,11 +43,17 @@ Yang dikerjakan:
 - Bersih-bersih file signing dari repo
 - Cold-start recovery pembelian sekarang jalan setelah app siap, bukan sebelum
 
+![[WR 04-09 App Play Store.webp]]
+
 ### 3. Rebranding VIP → Originals
 
 - Semua label VIP diganti Originals di web, mobile web, dan navigasi
 - Ganti badge crown emoji dengan icon SVG sendiri (lebih ringan & konsisten)
 - Menu Originals masuk sebagai kategori di home dan nav
+
+![[WR 04-09 Originals Web.webp]]
+
+![[WR 04-09 Originals Mobile.webp]]
 
 ### 4. Player, Subtitle & Session
 
@@ -74,6 +80,8 @@ Subscriber aktif kadang melihat gembok muncul acak di beberapa episode. Penyebab
 ### 8. Lain-lain
 
 - Landing page Jaka Tingkir: pasang Meta & TikTok pixel untuk tracking campaign
+
+![[WR 04-09 Jaka Tingkir Landing.webp]]
 - Dashboard: satu paket langganan sekarang bisa mencakup lebih dari satu kategori
 - Baseline tampilan jumlah view drama dinaikkan
 - Bikin kanban board internal untuk tracking semua task lintas repo (backend, web, app, dashboard, worker) dalam satu papan
