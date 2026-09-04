@@ -107,6 +107,7 @@ Terpisah dari itu, ada juga perbaikan supaya episode Originals benar-benar terbu
 2. Fix loading cue saat scroll antar episode di mobile web
 3. Fix app blank di iOS lama (di bawah 16.4) — build sekarang menargetkan Safari versi baru saja, sudah ada fix satu baris, tinggal deploy
 4. Upload subtitle bahasa Inggris & Melayu di dashboard — sudah merge, tinggal deploy
+5. Judul halaman kategori Originals di web (sebelumnya masih tampil "Original") — sudah siap di branch, tinggal merge
 
 **Backlog:**
 
