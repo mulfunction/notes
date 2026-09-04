@@ -12,10 +12,11 @@ draft: false
 Summary Pekerjaan Minggu ini:
 
 - Handling insiden pembayaran in-app (IAP) di hari campaign 3 September + bikin jaring pengaman otomatis supaya transaksi yang nyangkut tetap masuk
-- Release app Android versi 1.2.8 (berisi perbaikan recovery pembelian)
+- Build & submit release app Android 1.2.8 (berisi perbaikan recovery pembelian) — masih proses review/rollout di Play Store
 - Rebranding tier VIP menjadi **Originals** di web, mobile web, dan app
 - Perbaikan player: loading indicator, subtitle, dan user yang ke-logout sendiri
 - Perbaikan episode yang kelihatan terkunci padahal user sudah berlangganan
+- Subtitle 3 bahasa (ID/EN/MS) untuk 57 episode Jaka Tingkir Saga + regenerate 9 episode revisi
 - Perbaikan lag video (root cause ketemu: bitrate source terlalu besar)
 - Pasang monitoring + alerting pembayaran, notif langsung masuk ke chat tim
 - Landing page & tracking pixel Jaka Tingkir
@@ -32,16 +33,17 @@ Di hari campaign 3 September ada beberapa user yang sudah bayar tapi koin/langga
 
 Yang dikerjakan:
 
-- Sweep seluruh transaksi sejak akhir Agustus untuk memastikan tidak ada korban lain — hasilnya hanya 2 user, keduanya sudah di-handle manual di hari yang sama
+- Sweep seluruh transaksi sejak akhir Agustus untuk memastikan tidak ada korban lain — hasilnya hanya 2 user, keduanya langsung ditangani di hari yang sama (1 di-grant manual, 1 lagi transaksinya memang belum selesai di sisi payment provider)
 - Bikin tool rekonsiliasi otomatis: server membandingkan laporan penjualan store dengan database kita, lalu grant otomatis transaksi yang belum masuk. Jalan tiap 4 jam, **tanpa perlu update app**
 - Perbaikan permanen sisi server + sisi web sudah live; sisi native app ikut di release 1.2.8
 - Perbaikan tambahan: pembelian yang gagal sekarang di-retry oleh store (sebelumnya langsung dianggap selesai), grant dibuat idempotent supaya tidak dobel, dan verifikasi one-time purchase dipindah ke endpoint Google yang baru
 
-### 2. Release App 1.2.8
+### 2. Release App Android 1.2.8 (proses rilis)
 
 - Reset upload key Play Store dan perbaikan build release Android (build sempat gagal karena versi tooling)
 - Bersih-bersih file signing dari repo
 - Cold-start recovery pembelian sekarang jalan setelah app siap, bukan sebelum
+- Build sudah naik ke Play Console; halaman store masih menampilkan versi lama sampai review & rollout selesai
 
 ![[WR 04-09 App Play Store.webp]]
 
@@ -66,18 +68,25 @@ Yang dikerjakan:
 
 Subscriber aktif kadang melihat gembok muncul acak di beberapa episode. Penyebabnya pengecekan status unlock dilakukan satu per satu per episode dan gagal diam-diam saat traffic tinggi. Sudah diperbaiki jadi satu kali pengecekan batch, sudah merge, tinggal deploy.
 
-### 6. Performa Video
+Terpisah dari itu, ada juga perbaikan supaya episode Originals benar-benar terbuka untuk subscriber aktif — sebelumnya status langganan tidak selalu ikut diperhitungkan waktu membuka episode.
+
+### 6. Subtitle Jaka Tingkir Saga
+
+- Generate subtitle 3 bahasa (Indonesia, Inggris, Melayu) untuk 57 episode Jaka Tingkir Saga lewat script bulk subtitler
+- 9 episode yang kena revisi digenerate ulang subtitle-nya lalu di-upload ulang mengikuti versi video terbaru
+
+### 7. Performa Video
 
 - Root cause lag ketemu: file sumber masih raw ~15 Mbps 1080p60 dan tidak pernah lewat proses transcode
 - Jaka Tingkir sudah di-re-encode dan lancar
 - Sisanya (99 drama) masuk rencana, sekalian bikin stage transcode otomatis di worker supaya upload baru tidak mengulang masalah yang sama
 
-### 7. Monitoring & Alerting
+### 8. Monitoring & Alerting
 
 - Pasang metrik khusus jalur pembayaran (verifikasi, grant, webhook) dan 16 alert rule yang sudah dites otomatis
 - Alert sekarang dikirim ke chat tim, jadi masalah pembayaran ketahuan dari notif, bukan dari komplain user
 
-### 8. Lain-lain
+### 9. Lain-lain
 
 - Landing page Jaka Tingkir: pasang Meta & TikTok pixel untuk tracking campaign
 
@@ -97,7 +106,7 @@ Subscriber aktif kadang melihat gembok muncul acak di beberapa episode. Penyebab
 1. Fix episode terkunci acak untuk subscriber — deploy di jam sepi (dini hari)
 2. Fix loading cue saat scroll antar episode di mobile web
 3. Fix app blank di iOS lama (di bawah 16.4) — build sekarang menargetkan Safari versi baru saja, sudah ada fix satu baris, tinggal deploy
-4. Upload subtitle bahasa Inggris & Melayu di dashboard — sudah selesai & terverifikasi, tinggal merge + deploy
+4. Upload subtitle bahasa Inggris & Melayu di dashboard — sudah merge, tinggal deploy
 
 **Backlog:**
 
